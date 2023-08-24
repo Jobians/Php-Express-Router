@@ -9,6 +9,7 @@ Php Express Router is a lightweight and flexible PHP routing library that allows
 - Handle static files using the provided StaticMiddleware.
 - Set global shared data accessible throughout your application.
 - Configure error handlers for handling HTTP errors.
+- And more...
 
 ## Installation
 
@@ -32,6 +33,7 @@ To get started using Php Express Router, follow these steps:
            - Request.php
            - Response.php
            - Router.php
+       server.php
        .htaccess
    ```
 
