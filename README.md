@@ -97,28 +97,11 @@ It's important to set these configurations before defining routes and starting t
 
 For additional usage examples, check the [examples folder](examples) in this repository. You'll find more scenarios and use cases that can help you get a deeper understanding of how to use Php Express Router effectively.
 
-### Middleware
+## Support
 
-```php
-$router->use(function($req, $res, $next) {
-    // Middleware logic
-    $next();
-});
+If you find my work helpful, you can support me by donating:
 
-$router->get('/protected', function($req, $res) {
-    $res->send('This route is protected by middleware.');
-});
-```
-
-### 404 Error Handling
-
-```php
-$router->use404Error(function($req, $res, $path) {
-    $res->status(404)->send("Route not found: $path");
-});
-```
-
-...
+[![Donate](https://img.shields.io/badge/Donate-Crypto-0070BA.svg)](https://cwallet.com/t/TE6A6KMV)
 
 ## Contributing
 
