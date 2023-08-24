@@ -6,10 +6,13 @@ Php Express Router is a lightweight and flexible PHP routing library that allows
 
 - Define routes for various HTTP methods like GET, POST, PUT, DELETE, PATCH, OPTIONS, and more.
 - Attach middleware to routes to perform actions before or after route handling.
-- Handle static files using the provided StaticMiddleware.
+- Effortlessly handle static files using the provided StaticMiddleware.
 - Set global shared data accessible throughout your application.
-- Configure error handlers for handling HTTP errors.
-- And more...
+- Configure error handlers for effectively managing HTTP errors.
+- Render dynamic templates with popular engines like Smarty.
+- Send JSON responses easily with built-in helper functions.
+- Safeguard your routes using session and cookie handling.
+- And much more...
 
 ## Installation
 
