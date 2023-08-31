@@ -39,7 +39,7 @@ class Response
         return Router::getConfig($name);
     }
     
-    public function render($template, $data)
+    public function render($template, $data=[])
     {
         if ($this->getConfig('view_engine') === null) {
             trigger_error("View engine is not specified.", E_USER_WARNING);
