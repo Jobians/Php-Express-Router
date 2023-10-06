@@ -98,6 +98,7 @@ class Request
             case 'route':
                 return $_SERVER['REQUEST_URI'];
             case 'session':
+                session_start();
                 return $_SESSION;
             case 'method':
                 return $_SERVER['REQUEST_METHOD'];
