@@ -64,7 +64,7 @@ class Request
         include "modules/Utils/FileUpload.php";
         $FileUpload = new FileUpload(
             $_FILES[$filename],
-            count($_FILES[$filename]) > 1
+            is_array($_FILES[$filename]['name'])
         );
 
         return $FileUpload;
