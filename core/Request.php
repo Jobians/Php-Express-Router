@@ -47,7 +47,6 @@ class Request
     public function hasFile($filename)
     {
 
-        echo "<pre>";
         if (isset($_FILES[$filename]) and  is_array(
             $_FILES[$filename]['name']
         )) {
