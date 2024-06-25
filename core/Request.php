@@ -10,7 +10,7 @@
  * @copyright 2023 Copyright (c) JOBIANS TECHIE <jobianstechie@gmail.com>
  * @license MIT
  */
- 
+
 class Request
 {
     public $params = [];
@@ -34,6 +34,45 @@ class Request
     {
         return file_get_contents('php://input');
     }
+
+
+
+    /**
+     *  Check if at least one file upload is present in the request
+     *  @param string $filename Name of the file upload to check
+     *  @return bool 
+     */
+
+
+    public function hasFile($filename)
+    {
+
+        echo "<pre>";
+        if (isset($_FILES[$filename]) and  is_array(
+            $_FILES[$filename]['name']
+        )) {
+            return !empty($_FILES[$filename]['name'][0]);
+        }
+
+        return  !empty($_FILES[$filename]['name']);
+    }
+
+
+
+    public function files($filename)
+    {
+        // import file upload class
+        include "modules/Utils/FileUpload.php";
+        $FileUpload = new FileUpload(
+            $_FILES[$filename],
+            count($_FILES[$filename]) > 1
+        );
+
+        return $FileUpload;
+    }
+
+
+
 
     public function getHeaders()
     {
