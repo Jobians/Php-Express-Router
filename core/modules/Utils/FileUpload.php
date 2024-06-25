@@ -16,7 +16,6 @@ class FileUpload
         public  $uploadedFiles,
         public $isMultiple
     ) {
-        var_dump($uploadedFiles);
     }
 
 
@@ -101,8 +100,6 @@ class FileUpload
         list(, $ext) = explode("/", $mime);
 
         if (!$ext) return false;
-
-        var_dump($ext);
 
         return in_array($ext, $this->allowedExt);
     }
