@@ -11,7 +11,6 @@ class FileUpload
 
     private array $allowedExt = [];
 
-    private array $uploadedSucessFiles = [];
 
     public function __construct(
         public  $uploadedFiles,
