@@ -47,7 +47,6 @@ class Request
     public function hasFile($filename)
     {
 
-        echo "<pre>";
         if (isset($_FILES[$filename]) and  is_array(
             $_FILES[$filename]['name']
         )) {
@@ -61,7 +60,6 @@ class Request
 
     public function files($filename)
     {
-        var_dump($_FILES[$filename]);
         // import file upload class
         include "modules/Utils/FileUpload.php";
         $FileUpload = new FileUpload(
