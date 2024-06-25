@@ -42,8 +42,6 @@ class FileUpload
                                 $temp_name,
                                 $this->uploadDir . $uploadFilename
                             );
-
-
                         }
                     } else {
                         trigger_error("$uploadFilename is not a valid file upload. File uploading cancelled");
@@ -54,7 +52,7 @@ class FileUpload
                 return true;
             } else {
 
-                $temp_name = $this->uploadedFiles['tep_name'];
+                $temp_name = $this->uploadedFiles['tmp_name'];
                 $uploadFilename = $this->uploadedFiles['name'];
                 $uploadMime = $this->uploadedFiles['type'];
                 if (is_uploaded_file($temp_name)) {
