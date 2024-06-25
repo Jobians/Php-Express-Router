@@ -11,17 +11,26 @@ class FileUpload
 
     private array $allowedExt = [];
 
+    private array $uploadedSucessFiles = [];
+
     public function __construct(
         public  $uploadedFiles,
         public $isMultiple
     ) {
-    
+        var_dump($uploadedFiles);
     }
 
 
-    public function upload()
-    {
+    /**
+     * performs file upload and provide a callback function to handle upload results
+     * @param callable $callback Callback function to execute after each upload
+     * @param callable $naming Optional function to call in order to change upload file name
+     * @return bool
+     */
 
+
+    public function upload(callable $callback ,  callable $naming = null)
+    {
 
         if ($this->uploadDir) {
             if ($this->isMultiple) {
@@ -32,16 +41,21 @@ class FileUpload
                     $uploadMime = $this->uploadedFiles['type'][$file];
                     if (is_uploaded_file($temp_name)) {
 
-                        if ($this->allowedExt and !in_array($uploadMime, $this->allowedExt)) {
+                        if ($this->allowedExt and !$this->isAllowedExt($uploadMime)) {
                             trigger_error("File extention not allowed");
                             return false;
                         } else {
 
-                            echo "will upload " . $this->uploadDir . $uploadFilename;
+                            if(is_callable($naming)) {
+                                $uploadFilename = $naming($uploadFilename);
+                            }
+
                             $do_upload = move_uploaded_file(
                                 $temp_name,
-                                $this->uploadDir . $uploadFilename
+                                $this->uploadDir .  $uploadFilename 
                             );
+
+                            $callback($uploadFilename);
                         }
                     } else {
                         trigger_error("$uploadFilename is not a valid file upload. File uploading cancelled");
@@ -56,16 +70,21 @@ class FileUpload
                 $uploadFilename = $this->uploadedFiles['name'];
                 $uploadMime = $this->uploadedFiles['type'];
                 if (is_uploaded_file($temp_name)) {
-                    if ($this->allowedExt and !in_array($uploadMime, $this->allowedExt)) {
-                        trigger_error("File extention not allowed");
-                        return false;
-                    } else {
+                    if ($this->allowedExt and $this->isAllowedExt($uploadMime)) {
+
+                        if (is_callable($naming)) {
+                            $uploadFilename = $naming($uploadFilename);
+                        }
+
                         $do_upload = move_uploaded_file(
                             $temp_name,
                             $this->uploadDir . $uploadFilename
                         );
-
+                        $callback($uploadFilename);
                         return $do_upload;
+                    } else {
+                        trigger_error("File extention not allowed");
+                        return false;
                     }
                 }
             }
@@ -75,10 +94,27 @@ class FileUpload
     }
 
 
-    public function allow(array $mimeType)
+
+    private function isAllowedExt($mime)
+    {
+
+
+        list(, $ext) = explode("/", $mime);
+
+        if (!$ext) return false;
+
+        var_dump($ext);
+
+        return in_array($ext, $this->allowedExt);
+    }
+
+
+    public function allowOnly(array $mimeType)
     {
 
         $this->allowedExt = $mimeType;
+
+        return $this;
     }
 
 
