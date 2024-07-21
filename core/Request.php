@@ -91,14 +91,19 @@ class Request
                 return $_GET;
             case 'post':
                 return $_POST;
-            case 'header':
+            case 'body':
+                $requestBody = file_get_contents('php://input');
+                return json_decode($requestBody, true, 512, JSON_PARTIAL_OUTPUT_ON_ERROR);
+            case 'headers':
                 return $this->getHeaders();
             case 'cookies':
                 return $_COOKIE;
             case 'route':
                 return $_SERVER['REQUEST_URI'];
             case 'session':
-                session_start();
+                if (session_status() === PHP_SESSION_NONE) {
+                  session_start();
+                }
                 return $_SESSION;
             case 'method':
                 return $_SERVER['REQUEST_METHOD'];

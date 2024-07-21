@@ -16,7 +16,9 @@ class Response
     public function send($content, $http_headers = []) {
         if (is_array($http_headers) && !empty($http_headers)) {
           foreach ($http_headers as $key => $value) {
-              header($key . ': ' . $value);
+              if (!headers_sent()) {
+                header($key . ': ' . $value);
+              }
           }
       }
       echo $content;
@@ -24,13 +26,19 @@ class Response
 
     public function json($data)
     {
-        header('Content-Type: application/json');
+        if (!headers_sent()) {
+          header('Content-Type: application/json');
+        }
         echo json_encode($data);
     }
 
     public function redirect($url)
     {
-        header("Location: $url");
+        ob_start();
+        if (!headers_sent()) {
+          header("Location: $url");
+        }
+        ob_end_flush();
         exit();
     }
     
@@ -112,18 +120,24 @@ class Response
     }
     
     public function setHeader($name, $value) {
-    	header($name.':'.$value);
+      if (!headers_sent()) {
+        header($name.':'.$value);
+      }
     }
 
     public function setSession($name, $value)
     {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         $_SESSION[$name] = $value;
     }
 
     public function setCookie($name, $value, $expires = 0, $path = '', $domain = '', $secure = false, $httponly = false)
     {
+        ob_start();
         setcookie($name, $value, $expires, $path, $domain, $secure, $httponly);
+        ob_end_flush();
     }
 
     public function status($statusCode)

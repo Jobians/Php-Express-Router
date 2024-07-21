@@ -146,6 +146,8 @@ class Router
     }
     
     protected function matchRoute($route, $path, $req) {
+        $path = $path ?? "";
+        $route = $route ?? "";
         $routeParts = explode('/', trim($route, '/'));
         $pathParts = explode('/', trim($path, '/'));
 
